@@ -280,3 +280,127 @@ fi
 
    ![Imagem 0036](imagens/imagem0036.png)
 
+   5. Execute o script manualmente para verificar se ele funciona:
+   ```bash
+   /home/ec2-user/CheckApache.sh
+   ```
+
+   ![Imagem 0037](imagens/imagem0037.png)
+
+6. Verifique se os logs foram gerados corretamente:
+   ```bash
+   cat /mnt/saulo/servico_online.log
+   cat /mnt/saulo/servico_offline.log
+   ```
+
+   ![Imagem 0038](imagens/imagem0038.png)
+
+## Automatizando o Script
+
+O `crontab` é uma ferramenta do sistema Linux usada para agendar a execução automática de tarefas em horários específicos.
+
+1. Para editar as tarefas do cron para o usuário atual (neste caso `ec2-user`), use o seguinte comando:
+   ```bash
+   crontab -e
+   ```
+
+   ![Imagem 0039](imagens/imagem0039.png)
+
+2. Adicione a seguinte linha ao `crontab` para executar o script a cada 5 minutos e redirecionar a saída para um log em `/tmp`:
+   ```
+   */5 * * * * /bin/bash /home/ec2-user/CheckApache.sh >> /tmp/CheckApache.log 2>&1
+   ```
+
+   ![Imagem 0040](imagens/imagem0040.png)
+
+3. Comandos úteis do crontab:
+   - Listar as tarefas:
+     ```bash
+     crontab -l
+     ```
+
+     ![Imagem 0041](imagens/imagem0041.png)
+
+   - Apagar todas as entradas do crontab sem confirmação:
+     ```bash
+     crontab -r
+     ```
+
+     ![Imagem 0042](imagens/imagem0042.png)
+
+4. Comandos para verificar os logs:
+   - Verifica se os logs estão na pasta do NFS:
+     ```bash
+     ls -l /mnt/saulo
+     ```
+
+     ![Imagem 0043](imagens/imagem0043.png)
+
+   - Verifica o conteúdo dos logs de serviço online:
+     ```bash
+     cat /mnt/saulo/servico_online.log
+     ```
+
+     ![Imagem 0044](imagens/imagem0044.png)
+
+   - Verifica o conteúdo dos logs de serviço offline:
+     ```bash
+     cat /mnt/saulo/servico_offline.log
+     ```
+
+     ![Imagem 0045](imagens/imagem0045.png)
+
+## Exibição de logs na página do Apache
+
+**Tutorial**: Exibindo Logs do Apache com Indicadores Visuais em PHP
+
+1. Acesse o Servidor via SSH:
+   Conecte-se ao servidor onde o Apache e os logs estão configurados.
+
+2. Navegue para o Diretório da Web:
+   Vá para o diretório raiz da web do Apache (`/var/www/html`):
+
+   ```bash
+   cd /var/www/html
+   ```
+
+   ![Imagem 0046](imagens/imagem0046.png)
+
+3. Criar o Arquivo `exibir_logs.php`:
+   Crie um arquivo PHP chamado `exibir_logs.php`.
+
+   ```php
+   <?php
+   // Adicione o conteúdo do código PHP aqui
+   ?>
+   ```
+
+   ![Imagem 0047](imagens/imagem0047.png)
+
+4. Reinicie o Apache para aplicar as alterações:
+   ```bash
+   sudo systemctl restart httpd
+   ```
+
+   ![Imagem 0048](imagens/imagem0048.png)
+
+5. Acesse a página criada no navegador para visualizar os logs:
+   ```
+   http://18.116.157.143/exibir_logs.php
+   ```
+
+   ![Imagem 0049](imagens/imagem0049.png)
+
+---
+
+Criado por: Saulo Demonte  
+Data de criação: 15/09/2024  
+Atualização: 15/09/2024  
+
+## Imagens Adicionais
+
+Aqui estão as imagens adicionais referentes a outros passos do projeto:
+
+![Imagem 0050](imagens/imagem0050.png)
+![Imagem 0051](imagens/imagem0051.png)
+
