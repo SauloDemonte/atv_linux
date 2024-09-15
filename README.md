@@ -5,7 +5,7 @@
 
 ![Imagem 0001](imagens/imagem0001.png)
 
-1. A próxima tela será a página Home do console que pode variar dependendo de sua personalização;
+3. A próxima tela será a página Home do console que pode variar dependendo de sua personalização;
 
 ![Imagem 0002](imagens/imagem0002.png)
 
@@ -17,11 +17,11 @@ Para criar uma instância EC2 (Elastic Compute Cloud) na AWS, você pode seguir 
 
 ![Imagem 0003](imagens/imagem0003.png)
 
-1. No painel do EC2, clique no botão **_Launch Instance_**_._
+2. No painel do EC2, clique no botão **_Launch Instance_**_._
 
 ![Imagem 0004](imagens/imagem0004.png)
 
-1. Na próxima página, você precisará fornecer um nome para a instância e escolher algumas configurações de TAGs
+3. Na próxima página, você precisará fornecer um nome para a instância e escolher algumas configurações de TAGs
 
 **Por que usar TAGs?**
 
@@ -30,23 +30,23 @@ Para criar uma instância EC2 (Elastic Compute Cloud) na AWS, você pode seguir 
 - **Busca e filtragem**: TAGs facilitam a busca e filtragem de recursos dentro do console AWS, especialmente quando você tem muitos recursos.
 - **Automação**: Tags podem ser usadas em scripts e automações para identificar e operar em um conjunto específico de recursos.
 
-1. Escolha um nome para sua atividade, no caso usarei **_Atividade Linux_** e em seguida clique em vá em **_Add additional tags_**
+4. Escolha um nome para sua atividade, no caso usarei **_Atividade Linux_** e em seguida clique em vá em **_Add additional tags_**
 
 ![Imagem 0005](imagens/imagem0005.png)
 
-1. Na tela aberta crie as TAGs de acordo com sua necessidade na opção Add new tag ( 1 ), para os projetos da Compass usamos o padrão da imagem abaixo.
+5. Na tela aberta crie as TAGs de acordo com sua necessidade na opção Add new tag ( 1 ), para os projetos da Compass usamos o padrão da imagem abaixo.
 
 ![Imagem 0006](imagens/imagem0006.png)
 
 A AMI é o sistema operacional e o software pré-configurado que a sua instância EC2 usará.
 
-1. Em **_Application and OS Images (Amazon Machine Image - AMI)_**, você pode escolher uma imagem baseada em Linux (Ubuntu, Amazon Linux, Red Hat etc.) ou Windows. Neste caso usaremos a imagem solicitada no projeto
+6. Em **_Application and OS Images (Amazon Machine Image - AMI)_**, você pode escolher uma imagem baseada em Linux (Ubuntu, Amazon Linux, Red Hat etc.) ou Windows. Neste caso usaremos a imagem solicitada no projeto
 
 **_“Criar 1 instância EC2 com o sistema operacional Amazon Linux 2”_**
 
 ![Imagem 0007](imagens/imagem0007.png)
 
-1. Em **_Instance type_** nosso projeto solicita uma configuração
+7. Em **_Instance type_** nosso projeto solicita uma configuração
 
 **_“Família t3.small”_**
 
@@ -54,21 +54,21 @@ A AMI é o sistema operacional e o software pré-configurado que a sua instânci
 
 Para gerar uma chave pública para acesso ao ambiente AWS, você precisa criar um par de chaves (chave pública e chave privada) que será usado para autenticação.
 
-1. Ao criar uma instância EC2, você será solicitado a escolher ou criar um par de chaves na seção **_Key Pair (login)_**. Vamos criar uma nova.
+8. Ao criar uma instância EC2, você será solicitado a escolher ou criar um par de chaves na seção **_Key Pair (login)_**. Vamos criar uma nova.
 
 ![Imagem 0009](imagens/imagem0009.png)
 
-1. Nomeie o par de chaves e selecione o formato de arquivo:
+   a. Nomeie o par de chaves e selecione o formato de arquivo:
 
-- **PEM** (usado para Linux/Unix).
-- **PPK** (usado para Windows com PuTTY).
+   - **PEM** (usado para Linux/Unix).
+   - **PPK** (usado para Windows com PuTTY).
 
 Criaremos uma **_PEM_** pois utilizaremos para acesso no Linux
 
-1. Devemos escolher o tipo de criptografia das chaves.
+   b. Devemos escolher o tipo de criptografia das chaves.
 
-- RSA (Maior compatibilidade, menor velocidade e menos seguro com relação ao ED25519)
-- ED25519 (Menor compatibilidade, maior velocidade, mais moderno e seguro se comparado ao RSA)
+   - RSA (Maior compatibilidade, menor velocidade e menos seguro com relação ao ED25519)
+   - ED25519 (Menor compatibilidade, maior velocidade, mais moderno e seguro se comparado ao RSA)
 
 Como queremos ter a certeza de compatibilidade usaremos o **_RSA_** que não é inseguro e sim apenas tem uma segurança e velocidade inferior ao ED25519
 
@@ -78,27 +78,27 @@ Escolha as opções e em seguida **_Create key pair_** conforme imagem abaixo
 
 **_ATENÇÃO: Clique em Download Key Pair para salvar a chave privada em seu computador. Essa é a única chance de baixar a chave privada._**
 
-1. Devido ao projeto envolver acesso a um servidor web as opções **_Allow HTTPS traffic from de internet_** e **_Allow HTTP traffic from de internet_** foram habilitadas
+9. Devido ao projeto envolver acesso a um servidor web as opções **_Allow HTTPS traffic from de internet_** e **_Allow HTTP traffic from de internet_** foram habilitadas
 
 ![Imagem 0011](imagens/imagem0011.png)
 
-1. O próximo passo é realizar a configuração de armazenamento e para este projeto usaremos **_16GBs,_** também optei pelo **GP3** no tipo de volume do EBS por se tratar de um tipo com maior desempenho e menor custo
+10. O próximo passo é realizar a configuração de armazenamento e para este projeto usaremos **_16GBs,_** também optei pelo **GP3** no tipo de volume do EBS por se tratar de um tipo com maior desempenho e menor custo
 
 ![Imagem 0012](imagens/imagem0012.png)
 
-1. Após realizar a configuração, clicar em **_Launch Instance_** para criar a nossa instância EC2 com as configurações necessárias para prosseguir com projeto
+11. Após realizar a configuração, clicar em **_Launch Instance_** para criar a nossa instância EC2 com as configurações necessárias para prosseguir com projeto
 
 ![Imagem 0013](imagens/imagem0013.png)
 
-1. Aguarde a criação da instância, é para ser rápido.
+12. Aguarde a criação da instância, é para ser rápido.
 
 ![Imagem 0014](imagens/imagem0014.png)
 
-1. A mensagem abaixo mostra sucesso na criação da instância
+13. A mensagem abaixo mostra sucesso na criação da instância
 
 ![Imagem 0015](imagens/imagem0015.png)
 
-1. No menu esquerdo, acesse instância e verá que agora sua instância está criada e pronta para ser utilizada
+14. No menu esquerdo, acesse instância e verá que agora sua instância está criada e pronta para ser utilizada
 
 ![Imagem 0016](imagens/imagem0016.png)
 
@@ -106,31 +106,31 @@ Escolha as opções e em seguida **_Create key pair_** conforme imagem abaixo
 
 Um Elastic IP (EIP) é um endereço IPv4 público fornecido pela Amazon Web Services (AWS) que pode ser alocado para uso com instâncias do EC2. Ele é um recurso de IP fixo que permanece constante, diferentemente dos endereços IP públicos padrão, que podem mudar se a instância for interrompida ou reiniciada.
 
-1\. Entre no console AWS (Passo 1 do tutorial anterior);
+1. Entre no console AWS (Passo 1 do tutorial anterior);
 
-2\. No painel de navegação à esquerda, clique em **_All services_** no grupo **_Compute_** acesse **_EC2_**
+2. No painel de navegação à esquerda, clique em **_All services_** no grupo **_Compute_** acesse **_EC2_**
 
 ![Imagem 0017](imagens/imagem0017.png)
 
-1. No painel esquerdo vá em **_Elastic IPs_**.
+3. No painel esquerdo vá em **_Elastic IPs_**.
 
 ![Imagem 0018](imagens/imagem0018.png)
 
-1. Clique em **_Allocate Elastic IP address_**.
+4. Clique em **_Allocate Elastic IP address_**.
 ![Imagem 0019](imagens/imagem0019.png)
 
-1. Na tela seguinte, selecione a opção **_Amazon's pool of IPv4 addresses_,** adicione a tag do projeto para manter a organização e clique em **_Allocate_**_._
+5. Na tela seguinte, selecione a opção **_Amazon's pool of IPv4 addresses_,** adicione a tag do projeto para manter a organização e clique em **_Allocate_**_._
 
 ![Imagem 0020](imagens/imagem0020.png)
 
 
 
-1. Anote o **_Elastic IP address_** que foi gerado e clique em **_Associate this Elastic IP address_**
+6. Anote o **_Elastic IP address_** que foi gerado e clique em **_Associate this Elastic IP address_**
    ![Imagem 0021](imagens/imagem0021.png)
 
 
 
-1. Na janela de associação, escolha a instância EC2 que você deseja associar e clique em **_Associate_**.
+7. Na janela de associação, escolha a instância EC2 que você deseja associar e clique em **_Associate_**.
 ![Imagem 0022](imagens/imagem0022.png)
 
 
@@ -190,7 +190,7 @@ Antes de instalar o NFS, é sempre bom garantir que seu sistema esteja com os pa
 ![Imagem 0030](imagens/imagem0030.png)
 
 
-- - 1. Agora que os pacotes foram atualizados, execute o comando abaixo para instalar o serviço do NFS:
+- - 2. Agora que os pacotes foram atualizados, execute o comando abaixo para instalar o serviço do NFS:
 
 **_sudo yum install nfs-utils -y_**
 
@@ -198,7 +198,7 @@ Caso ja esteja instalado receberá esta mensagem
 ![Imagem 0031](imagens/imagem0031.png)
 **Explicação**: O pacote nfs-utils contém os utilitários necessários para configurar e rodar o NFS no sistema. A opção -y confirma automaticamente a instalação.
 
-- - 1. Após a instalação, você precisa iniciar o serviço NFS e garantir que ele seja iniciado automaticamente quando o sistema for reinicializado:
+- - 3. Após a instalação, você precisa iniciar o serviço NFS e garantir que ele seja iniciado automaticamente quando o sistema for reinicializado:
 ![Imagem 0032](imagens/imagem0032.png)
 
 **Explicação**:
@@ -227,7 +227,7 @@ Agora, precisamos criar o diretório no servidor que será compartilhado via NFS
 
 Defina permissões apropriadas para o diretório, permitindo que clientes NFS possam acessá-lo. Execute os seguintes comandos:
 
-1. Use os commandos abaixo
+2. Use os commandos abaixo
 
 **_sudo chown nobody:nogroup /mnt/nfs_share_**
 ![Imagem 0035](imagens/imagem0035.png)
@@ -246,7 +246,7 @@ Certifique-se de que o arquivo **/etc/exports** no servidor NFS está configurad
 
 Você precisa abrir o arquivo de configuração do NFS para adicionar essa linha. Faça isso com um editor de texto, como o nano.
 
-1. Abra o arquivo /etc/exports
+3. Abra o arquivo /etc/exports
 
 **_sudo nano_** **_/etc/exports_**
 ![Imagem 0037](imagens/imagem0037.png)
@@ -269,7 +269,7 @@ Isso garante que qualquer máquina na internet poderá acessar o diretório comp
 
 **ATENÇÃO**! Isso cria um compartilhamento público e acessível, mas esse tipo de configuração pode ser vulnerável a ataques se a segurança da rede não for adequada.
 
-1. Depois de adicionar a linha, salve o arquivo
+4. Depois de adicionar a linha, salve o arquivo
 
 Pressione Ctrl + X para sair.
 
@@ -279,7 +279,7 @@ Pressione Enter para confirmar o nome do arquivo (ele já estará definido como 
 
 Depois de salvar o arquivo /etc/exports, você precisa recarregar as configurações do NFS para que as novas regras entrem em vigor.
 
-1. Execute o comando:
+5. Execute o comando:
 
 **_sudo exportfs -ra_**
 
@@ -316,21 +316,21 @@ Instale o pacote nfs-utils, que inclui o cliente NFS
 
 nfs-common: Este pacote inclui os utilitários necessários para se conectar a servidores NFS.
 
-1. Crie um diretório onde o compartilhamento NFS será montado
+2. Crie um diretório onde o compartilhamento NFS será montado
 
 **_sudo mkdir -p /mnt/nfs_shared_**
 ![Imagem 0042](imagens/imagem0042.png)
 
 /mnt/nfs_shared: Este é o diretório local onde o compartilhamento NFS será montado na máquina cliente.
 
-1. Configurar a Montagem Automática no /etc/fstab editando o Arquivo /etc/fstab:
+3. Configurar a Montagem Automática no /etc/fstab editando o Arquivo /etc/fstab:
 
 Abra o arquivo /etc/fstab com um editor de texto, neste caso o nano foi utilizado
 
 **_sudo nano /etc/fstab_**
 ![Imagem 0043](imagens/imagem0043.png)
 
-1. Adicione a seguinte linha ao final do arquivo /etc/fstab:
+4. Adicione a seguinte linha ao final do arquivo /etc/fstab:
 
 **_18.116.157.143:/mnt/saulo /mnt/nfs_shared nfs defaults 0 0_**
 ![Imagem 0044](imagens/imagem0044.png)
@@ -345,7 +345,7 @@ pressione CTRL + O para salvar e CTRL + X para sair
 - **defaults**: Opções de montagem padrão (rw, suid, dev, exec, auto, nouser, async).
 - **0 0**: Opções para backup e verificação de sistema de arquivos (geralmente deixadas como 0 para montagens NFS).
 
-1. Para montar imediatamente o compartilhamento NFS sem reiniciar a máquina use o comando abaixo.
+5. Para montar imediatamente o compartilhamento NFS sem reiniciar a máquina use o comando abaixo.
 
 **_sudo mount -a_**
 ![Imagem 0045](imagens/imagem0045.png)
@@ -363,20 +363,20 @@ Se você quiser montar o compartilhamento NFS manualmente sem editar o arquivo /
 
 **_Nota:_** Essa montagem é temporária e será removida na próxima reinicialização
 
-1. Verifique se o compartilhamento NFS foi montado corretamente:
+6. Verifique se o compartilhamento NFS foi montado corretamente:
 
 **_df -h | grep nfs_**
 ![Imagem 0047](imagens/imagem0047.png)
 
-1. Testar a Montagem Automática (Opcional)
+7. Testar a Montagem Automática (Opcional)
 
 Reiniciar a Máquina Cliente usando o **_sudo reboot_**
 ![Imagem 0048](imagens/imagem0048.png)
 
-1. Verificar se a Montagem Persiste:
+8. Verificar se a Montagem Persiste:
 ![Imagem 0049](imagens/imagem0049.png)
 
-1. Para acessar o servidor NFS (neste caso, uma instância EC2) via SSH, use o seguinte comando:
+9. Para acessar o servidor NFS (neste caso, uma instância EC2) via SSH, use o seguinte comando:
 
 **_ssh -i ~/AtvLinux.pem_** [**_ec2-user@18.116.157.143_**](mailto:ec2-user@18.116.157.143)
 ![Imagem 0050](imagens/imagem0050.png)
@@ -388,17 +388,17 @@ Reiniciar a Máquina Cliente usando o **_sudo reboot_**
 - **ec2-user:** Nome do usuário padrão para instâncias Amazon Linux/Ubuntu na AWS.
 - **18.116.157.143:** O endereço IP público da instância EC2 (servidor NFS).
 
-1. Verificar o Status do Serviço NFS
+10. Verificar o Status do Serviço NFS
 
 **_sudo systemctl status nfs-server_**
 ![Imagem 0051](imagens/imagem0051.png)
 
-1. Reiniciar o Serviço NFS (Se Necessário)
+11. Reiniciar o Serviço NFS (Se Necessário)
 
 **_sudo systemctl restart nfs-server_**
 ![Imagem 0052](imagens/imagem0052.png)
 
-1. Criar arquivo de teste
+12. Criar arquivo de teste
 
 **_echo "Teste de compartilhamento NFS" > teste_nfs.txt_**
 ![Imagem 0053](imagens/imagem0053.png)
@@ -410,7 +410,7 @@ Reiniciar a Máquina Cliente usando o **_sudo reboot_**
 - **\>**: Este é um operador de redirecionamento. Ele direciona a saída do comando echo para um arquivo. Se o arquivo especificado já existir, ele será sobrescrito. Se não existir, ele será criado.
 - **teste_nfs.txt**: Este é o nome do arquivo de destino onde a saída do comando echo será escrita. Neste exemplo, o comando cria (ou sobrescreve) um arquivo chamado teste_nfs.txt e escreve a string "Teste de compartilhamento NFS" nele.
 
-1. Verifica se o arquivo foi criado no diretório
+13. Verifica se o arquivo foi criado no diretório
 
 **_ls -l /mnt/nfs_shared/teste_nfs.txt_**
 ![Imagem 0054](imagens/imagem0054.png)
@@ -422,26 +422,26 @@ Reiniciar a Máquina Cliente usando o **_sudo reboot_**
 **_sudo yum update -y_**
 ![Imagem 0055](imagens/imagem0055.png)
 
-- 1. Agora, instale o Apache no seu servidor.
+- 2. Agora, instale o Apache no seu servidor.
 
 **_sudo yum install httpd -y_**
 ![Imagem 0056](imagens/imagem0056.png)
 
 
-- 1. Depois da instalação, inicie o serviço do Apache e configure-o para iniciar automaticamente no boot.
+- 3. Depois da instalação, inicie o serviço do Apache e configure-o para iniciar automaticamente no boot.
 
 **_sudo systemctl start httpd_**
 
 **_sudo systemctl enable httpd_**
 ![Imagem 0057](imagens/imagem0057.png)
 
-- 1. Certifique-se de que o Apache está rodando corretamente:
+- 4. Certifique-se de que o Apache está rodando corretamente:
 
 **_sudo systemctl status httpd_**
 ![Imagem 0058](imagens/imagem0058.png)
 
 
-- 1. Para verificar se o Apache está funcionando corretamente, abra um navegador e digite o endereço IP do servidor. Se o Apache estiver configurado corretamente, você verá a página padrão do Apache.
+- 5. Para verificar se o Apache está funcionando corretamente, abra um navegador e digite o endereço IP do servidor. Se o Apache estiver configurado corretamente, você verá a página padrão do Apache.
 
 <http://18.116.157.143>
 ![Imagem 0059](imagens/imagem0059.png)
@@ -467,7 +467,7 @@ Preparar a execução automatizada do script a cada 5 minutos.
   3. Use um editor de texto para criar o script **CheckApache.sh**:
 ![Imagem 0060](imagens/imagem0060.png)
 
-- 1. Adicionar o Conteúdo do Script
+- 4. Adicionar o Conteúdo do Script
 ![Imagem 0061](imagens/imagem0061.png)
 ![Imagem 0062](imagens/imagem0062.png)
 
@@ -512,7 +512,7 @@ Usa o comando echo para gravar a data, hora, nome do serviço, status e mensagem
 
 Assim como antes, >> é usado para anexar a mensagem ao arquivo.
 
-- 1. A imagem mostra o comando sendo executado com sucesso no terminal de uma instância AWS EC2.
+- 5. A imagem mostra o comando sendo executado com sucesso no terminal de uma instância AWS EC2.
 
 **_chmod +x /home/ec2-user/CheckApache.sh_**
 
@@ -522,12 +522,12 @@ Assim como antes, >> é usado para anexar a mensagem ao arquivo.
 - **/home/ec2-user/CheckApache.sh**: Este é o caminho para o script CheckApache.sh criado.
 ![Imagem 0063](imagens/imagem0063.png)
 
-- 1. Execute o script manualmente para verificar se ele funciona:
+- 6. Execute o script manualmente para verificar se ele funciona:
 
 **_/home/ec2-user/CheckApache.sh_**
 ![Imagem 0064](imagens/imagem0064.png)
 
-- 1. Verifique se os logs foram gerados corretamente:
+- 7. Verifique se os logs foram gerados corretamente:
 
 **_cat /mnt/saulo/servico_online.log_**
 ![Imagem 0065](imagens/imagem0065.png)
@@ -546,7 +546,7 @@ O crontab é uma ferramenta do sistema Linux usada para agendar a execução aut
 **_crontab -e_**
 ![Imagem 0067](imagens/imagem0067.png)
 
-1. Adicione a seguinte linha ao crontab para executar o script a cada 5 minutos e redirecionar a saída para um log em /tmp:
+2. Adicione a seguinte linha ao crontab para executar o script a cada 5 minutos e redirecionar a saída para um log em /tmp:
 
 **_\*/5 \* \* \* \* /bin/bash /home/ec2-user/CheckApache.sh >> /tmp/CheckApache.log 2>&1_**
 ![Imagem 0068](imagens/imagem0068.png)
@@ -571,12 +571,12 @@ Caso queira checar o log de erro do script, use o comando:
 
 **_cat /tmp/CheckApache.log_**
 
-1. Comandos úteis do crontab
+3. Comandos úteis do crontab
 
 - **_crontab -l_**: lista as tarefas
 - **crontab -r**: apaga todas as entradas do crontab sem confirmação
 
-1. Comandos para verificar os logs
+4. Comandos para verificar os logs
 
 **Ls -l /mnt/saulo**: verifica se os logs estão na pasta do nfs
 
