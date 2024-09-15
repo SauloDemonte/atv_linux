@@ -1,4 +1,4 @@
-**#Acessando o Console AWS**
+# Acessando o Console AWS
 
 1. Acessar o console [AWS access portal (awsapps.com)](https://academy-compass.awsapps.com/start/#/?tab=accounts) e fazer o login com a conta Compass;
 2. Ao acessar o console AWS entre em sua conta;
@@ -102,7 +102,7 @@ Escolha as opções e em seguida **_Create key pair_** conforme imagem abaixo
 
 ![Imagem 0016](imagens/imagem0016.png)
 
-**#Configurando um Elastic IP (EIP)**
+# Configurando um Elastic IP (EIP)
 
 Um Elastic IP (EIP) é um endereço IPv4 público fornecido pela Amazon Web Services (AWS) que pode ser alocado para uso com instâncias do EC2. Ele é um recurso de IP fixo que permanece constante, diferentemente dos endereços IP públicos padrão, que podem mudar se a instância for interrompida ou reiniciada.
 
@@ -137,7 +137,7 @@ Um Elastic IP (EIP) é um endereço IPv4 público fornecido pela Amazon Web Serv
 Agora o Elastic IP está vinculado à sua instância EC2.
 ![Imagem 0023](imagens/imagem0023.png)
 
-**#Liberando as portas de comunicação**
+# Liberando as portas de comunicação
 
 Um **Security Group** na **Amazon Web Services (AWS)** é uma configuração de firewall virtual que controla o tráfego de entrada e saída de recursos da AWS, como instâncias EC2. Ele define as regras que determinam quais tipos de tráfego podem alcançar ou sair de uma instância EC2, funcionando como uma camada adicional de segurança.
 
