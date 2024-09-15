@@ -145,3 +145,123 @@ sudo systemctl status nfs-server
 ```
 
 ![Imagem 0021](imagens/imagem0021.png)
+<h1 style="color:blue; font-size: 2em;">Criando o diretório que será compartilhado</h1>
+
+Agora precisamos criar o diretório no servidor que será compartilhado via NFS. Este diretório será acessível pelos clientes na rede.
+
+Execute o seguinte comando para criar o diretório:
+
+```bash
+sudo mkdir -p /mnt/saulo
+```
+
+![Imagem 0022](imagens/imagem0022.png)
+
+**Explicação**:
+- `mkdir`: Cria um diretório.
+- `-p`: Garante que o diretório será criado mesmo que os diretórios pais (como `/mnt`) ainda não existam.
+
+<h1 style="color:blue; font-size: 2em;">Configurando permissões no diretório compartilhado</h1>
+
+Defina permissões apropriadas para o diretório, permitindo que clientes NFS possam acessá-lo. Execute os seguintes comandos:
+
+```bash
+sudo chown nobody:nogroup /mnt/saulo
+sudo chmod 777 /mnt/saulo
+```
+
+![Imagem 0023](imagens/imagem0023.png)
+
+**Explicação**:
+- `chown`: Altera o proprietário do diretório para o usuário `nobody` e o grupo `nogroup`, o que garante que o diretório seja acessível de forma genérica.
+- `chmod 777`: Garante que qualquer usuário (local ou remoto) tenha permissão para ler, escrever e executar dentro desse diretório.
+
+<h1 style="color:blue; font-size: 2em;">Configurando permissões no arquivo /etc/exports</h1>
+
+Certifique-se de que o arquivo `/etc/exports` no servidor NFS está configurado para permitir o acesso público. Você precisa abrir o arquivo de configuração do NFS para adicionar essa linha. Faça isso com um editor de texto como o nano.
+
+Abra o arquivo `/etc/exports`:
+
+```bash
+sudo nano /etc/exports
+```
+
+![Imagem 0024](imagens/imagem0024.png)
+
+Adicione a linha de configuração abaixo ao arquivo:
+
+```
+/mnt/saulo *(rw,sync,no_subtree_check,no_root_squash)
+```
+
+![Imagem 0025](imagens/imagem0025.png)
+
+**Explicação**:
+- `/mnt/saulo`: O diretório a ser compartilhado.
+- `*`: Permite acesso de qualquer IP.
+- `rw`: Os clientes podem ler e escrever no diretório.
+- `sync`: Gravações são feitas imediatamente no disco do servidor.
+- `no_subtree_check`: Desativa verificações de subárvore para melhorar o desempenho.
+- `no_root_squash`: Permite que clientes root tenham permissões de root no servidor (use com cuidado).
+
+Depois de adicionar a linha, salve o arquivo:
+- Pressione `Ctrl + X` para sair.
+- Pressione `Y` para confirmar que deseja salvar as alterações.
+- Pressione `Enter` para confirmar o nome do arquivo.
+
+Depois de salvar o arquivo `/etc/exports`, você precisa recarregar as configurações do NFS para que as novas regras entrem em vigor.
+
+Execute o comando:
+
+```bash
+sudo exportfs -ra
+```
+
+![Imagem 0026](imagens/imagem0026.png)
+
+---
+
+<h1 style="color:blue; font-size: 2em;">Acessando o NFS</h1>
+
+1. Use uma máquina Linux para acessar com a chave `.pem`. Neste caso, foi utilizada uma máquina virtual com o Debian instalado.
+
+2. Instalar o Cliente NFS (Se Ainda Não Estiver Instalado):
+
+```bash
+sudo apt-get update
+sudo apt-get install -y nfs-common
+```
+
+![Imagem 0027](imagens/imagem0027.png)
+
+3. Crie um diretório onde o compartilhamento NFS será montado:
+
+```bash
+sudo mkdir -p /mnt/nfs_shared
+```
+
+![Imagem 0028](imagens/imagem0028.png)
+
+4. Configurar a Montagem Automática no `/etc/fstab`:
+
+```bash
+sudo nano /etc/fstab
+```
+
+![Imagem 0029](imagens/imagem0029.png)
+
+5. Adicione a seguinte linha ao final do arquivo `/etc/fstab`:
+
+```
+18.116.157.143:/mnt/saulo /mnt/nfs_shared nfs defaults 0 0
+```
+
+![Imagem 0030](imagens/imagem0030.png)
+
+6. Monte o diretório compartilhado manualmente:
+
+```bash
+sudo mount -a
+```
+
+![Imagem 0031](imagens/imagem0031.png)
