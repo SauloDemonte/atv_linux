@@ -265,3 +265,118 @@ sudo mount -a
 ```
 
 ![Imagem 0031](imagens/imagem0031.png)
+<h1 style="color:blue; font-size: 2em;">Instalando o Apache</h1>
+
+1. Atualize o servidor. Antes de instalar o Apache, é recomendável atualizar os pacotes do sistema:
+   ```bash
+   sudo yum update -y
+   ```
+   ![Imagem 0032](imagens/imagem0032.png)
+
+2. Agora instale o Apache no seu servidor:
+   ```bash
+   sudo yum install httpd -y
+   ```
+   ![Imagem 0033](imagens/imagem0033.png)
+
+3. Depois da instalação, inicie o serviço do Apache e configure-o para iniciar automaticamente no boot:
+   ```bash
+   sudo systemctl start httpd
+   sudo systemctl enable httpd
+   ```
+   ![Imagem 0034](imagens/imagem0034.png)
+
+4. Certifique-se de que o Apache está rodando corretamente:
+   ```bash
+   sudo systemctl status httpd
+   ```
+   ![Imagem 0035](imagens/imagem0035.png)
+
+<h1 style="color:blue; font-size: 2em;">Script de monitoramento</h1>
+
+**Objetivo**: Criar um script de monitoramento do servidor Apache onde o script deve conter:
+- Data / Hora;
+- Nome do Serviço;
+- Status do serviço; 
+- Mensagem personalizada de online ou offline;
+
+O script deve gerar 2 arquivos de saída: 1 para o serviço online e 1 para o serviço offline.
+
+1. Acesse a máquina onde você deseja executar o script (no caso `ec2-user@18.116.157.143`).
+2. Navegue até o diretório onde deseja criar o script, por exemplo, `/home/ec2-user`.
+3. Use um editor de texto para criar o script `CheckApache.sh`.
+
+```bash
+#!/bin/bash
+SERVICO="httpd"
+DATA_HORA=$(date "+%Y-%m-%d %H:%M:%S")
+
+if systemctl is-active --quiet $SERVICO; then
+    STATUS="ONLINE"
+    MENSAGEM="O serviço $SERVICO está funcionando corretamente."
+    echo "$DATA_HORA - $SERVICO - $STATUS - $MENSAGEM" >> /mnt/saulo/servico_online.log
+else
+    STATUS="OFFLINE"
+    MENSAGEM="O serviço $SERVICO está parado ou enfrentando problemas."
+    echo "$DATA_HORA - $SERVICO - $STATUS - $MENSAGEM" >> /mnt/saulo/servico_offline.log
+fi
+```
+   ![Imagem 0036](imagens/imagem0036.png)
+
+4. Torne o script executável:
+   ```bash
+   chmod +x /home/ec2-user/CheckApache.sh
+   ```
+   ![Imagem 0037](imagens/imagem0037.png)
+
+5. Execute o script manualmente para verificar se ele funciona:
+   ```bash
+   /home/ec2-user/CheckApache.sh
+   ```
+   ![Imagem 0038](imagens/imagem0038.png)
+
+<h1 style="color:blue; font-size: 2em;">Automatizando o Script</h1>
+
+O `crontab` é uma ferramenta do sistema Linux usada para agendar a execução automática de tarefas em horários específicos.
+
+1. Para editar as tarefas do cron para o usuário atual (neste caso `ec2-user`), use o seguinte comando:
+   ```bash
+   crontab -e
+   ```
+   ![Imagem 0039](imagens/imagem0039.png)
+
+2. Adicione a seguinte linha ao `crontab` para executar o script a cada 5 minutos e redirecionar a saída para um log em `/tmp`:
+   ```
+   */5 * * * * /bin/bash /home/ec2-user/CheckApache.sh >> /tmp/CheckApache.log 2>&1
+   ```
+   ![Imagem 0040](imagens/imagem0040.png)
+
+<h1 style="color:blue; font-size: 2em;">Exibindo Logs na Página do Apache</h1>
+
+1. Acesse o servidor via SSH.
+2. Navegue para o diretório da web do Apache:
+   ```bash
+   cd /var/www/html
+   ```
+   ![Imagem 0041](imagens/imagem0041.png)
+
+3. Crie um arquivo PHP chamado `exibir_logs.php`.
+
+```php
+<?php
+// Adicione o conteúdo do código PHP aqui
+?>
+```
+   ![Imagem 0042](imagens/imagem0042.png)
+
+4. Reinicie o Apache para aplicar as alterações:
+   ```bash
+   sudo systemctl restart httpd
+   ```
+   ![Imagem 0043](imagens/imagem0043.png)
+
+5. Acesse a página criada no navegador para visualizar os logs:
+   ```
+   http://18.116.157.143/exibir_logs.php
+   ```
+   ![Imagem 0044](imagens/imagem0044.png)
