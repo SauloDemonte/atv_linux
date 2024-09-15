@@ -124,3 +124,159 @@ Adicionar as regras de entrada da nossa Instancia
 Uma boa prática é adicionar as TAGs para manter a organização.
 
 ![Imagem 0019](imagens/imagem0019.png)
+
+## Instalando e Configurando o NFS
+
+1. Atualizando os pacotes do servidor:
+   ```bash
+   sudo yum update -y
+   ```
+
+   ![Imagem 0020](imagens/imagem0020.png)
+
+2. Instalando o serviço do NFS:
+   ```bash
+   sudo yum install nfs-utils -y
+   ```
+
+   ![Imagem 0021](imagens/imagem0021.png)
+
+3. Criando o diretório que será compartilhado:
+   ```bash
+   sudo mkdir -p /mnt/Saulo
+   ```
+
+   ![Imagem 0022](imagens/imagem0022.png)
+
+4. Configurando permissões no diretório compartilhado:
+   ```bash
+   sudo chown nobody:nogroup /mnt/nfs_share
+   sudo chmod 777 /mnt/nfs_share
+   ```
+
+   ![Imagem 0023](imagens/imagem0023.png)
+
+5. Editando o arquivo /etc/exports:
+   ```bash
+   sudo nano /etc/exports
+   ```
+
+   ![Imagem 0024](imagens/imagem0024.png)
+
+6. Adicione a linha de configuração ao arquivo:
+   ```
+   /mnt/saulo *(rw,sync,no_subtree_check,no_root_squash)
+   ```
+
+   ![Imagem 0025](imagens/imagem0025.png)
+
+7. Recarregando as configurações do NFS:
+   ```bash
+   sudo exportfs -ra
+   ```
+
+   ![Imagem 0026](imagens/imagem0026.png)
+
+## Acessando o NFS
+
+1. Use uma máquina Linux para acessar com a chave `.pem`. Neste caso, foi utilizada uma máquina virtual com o Debian instalado.
+
+2. Instalar o Cliente NFS (Se Ainda Não Estiver Instalado):
+   ```bash
+   sudo apt-get update
+   sudo apt-get install -y nfs-common
+   ```
+
+   ![Imagem 0027](imagens/imagem0027.png)
+
+3. Crie um diretório onde o compartilhamento NFS será montado:
+   ```bash
+   sudo mkdir -p /mnt/nfs_shared
+   ```
+
+   ![Imagem 0028](imagens/imagem0028.png)
+
+4. Configurar a Montagem Automática no /etc/fstab:
+   ```bash
+   sudo nano /etc/fstab
+   ```
+
+   ![Imagem 0029](imagens/imagem0029.png)
+
+5. Adicione a seguinte linha ao final do arquivo /etc/fstab:
+   ```
+   18.116.157.143:/mnt/saulo /mnt/nfs_shared nfs defaults 0 0
+   ```
+
+   ![Imagem 0030](imagens/imagem0030.png)
+
+## Instalando o Apache
+
+1. Atualize o servidor. Antes de instalar o Apache, é recomendável atualizar os pacotes do sistema:
+   ```bash
+   sudo yum update -y
+   ```
+
+   ![Imagem 0031](imagens/imagem0031.png)
+
+2. Agora instale o Apache no seu servidor:
+   ```bash
+   sudo yum install httpd -y
+   ```
+
+   ![Imagem 0032](imagens/imagem0032.png)
+
+3. Depois da instalação, inicie o serviço do Apache e configure-o para iniciar automaticamente no boot:
+   ```bash
+   sudo systemctl start httpd
+   sudo systemctl enable httpd
+   ```
+
+   ![Imagem 0033](imagens/imagem0033.png)
+
+4. Certifique-se de que o Apache está rodando corretamente:
+   ```bash
+   sudo systemctl status httpd
+   ```
+
+   ![Imagem 0034](imagens/imagem0034.png)
+
+## Script de monitoramento
+
+**Objetivo**: Criar um script de monitoramento do servidor Apache onde o script deve conter:
+- Data / Hora;
+- Nome do Serviço;
+- Status do serviço; 
+- Mensagem personalizada de online ou offline;
+
+O script deve gerar 2 arquivos de saída: 1 para o serviço online e 1 para o serviço offline.
+
+1. Acesse a máquina onde você deseja executar o script (no caso `ec2-user@18.116.157.143`).
+2. Navegue até o diretório onde deseja criar o script, por exemplo, `/home/ec2-user`.
+3. Use um editor de texto para criar o script `CheckApache.sh`.
+
+```bash
+#!/bin/bash
+SERVICO="httpd"
+DATA_HORA=$(date "+%Y-%m-%d %H:%M:%S")
+
+if systemctl is-active --quiet $SERVICO; then
+    STATUS="ONLINE"
+    MENSAGEM="O serviço $SERVICO está funcionando corretamente."
+    echo "$DATA_HORA - $SERVICO - $STATUS - $MENSAGEM" >> /mnt/saulo/servico_online.log
+else
+    STATUS="OFFLINE"
+    MENSAGEM="O serviço $SERVICO está parado ou enfrentando problemas."
+    echo "$DATA_HORA - $SERVICO - $STATUS - $MENSAGEM" >> /mnt/saulo/servico_offline.log
+fi
+```
+
+   ![Imagem 0035](imagens/imagem0035.png)
+
+4. Torne o script executável:
+   ```bash
+   chmod +x /home/ec2-user/CheckApache.sh
+   ```
+
+   ![Imagem 0036](imagens/imagem0036.png)
+
